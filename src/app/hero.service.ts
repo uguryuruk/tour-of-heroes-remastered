@@ -3,22 +3,30 @@ import { Hero } from './hero';
 import { HEROES } from './mock-heroes';
 import { Observable, of } from 'rxjs';  //asenkron işlemler için.
 import { MessageService } from './message.service';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
 
+  private heroesUrl = 'api/heroes';  // URL to web api
+
   //service in service
-  constructor(private messageService: MessageService) { }
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService) { }
+
+    /** Log a HeroService message with the MessageService */
+private log(message: string) {
+  this.messageService.add(`HeroService: ${message}`);
+}
 
 //asenkron!
+//adds incoming heroes to the messages property of msgs service. Then you use it from there
+/** GET heroes from the server */
 getHeroes(): Observable<Hero[]> {
-  const heroes = of(HEROES);
-  //adds incoming heroes to the messages property of msgs service. Then you use it from there
-  this.messageService.add('HeroService: fetched heroes');
-  return heroes;
+  return this.http.get<Hero[]>(this.heroesUrl)
 }
 
 getHero(id: number): Observable<Hero> {
