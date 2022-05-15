@@ -19,9 +19,18 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 19, name: 'Magma' },
       { id: 20, name: 'Tornado' }
     ];
+    const weapons = [
+      { id: 11, name: 'Sword',attackPoint:15,endurance:70 },
+      { id: 12, name: 'Arrow',attackPoint:10,endurance:50 },
+      { id: 13, name: 'Axe',attackPoint:25,endurance:80 },
+      { id: 14, name: 'Dagger',attackPoint:8,endurance:90 },
+      { id: 15, name: 'Club',attackPoint:20,endurance:30 },
+      { id: 16, name: 'Spear',attackPoint:20,endurance:40 },
+    ];
     //returs that api address?
-    return {heroes};
+    return {heroes,weapons};
   }
+
 
   // Overrides the genId method to ensure that a hero always has an id.
   // If the heroes array is empty,
