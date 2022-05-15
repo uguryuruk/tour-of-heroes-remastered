@@ -62,9 +62,13 @@ getHeroes(): Observable<Hero[]> {
 
 /** GET hero by id. Will 404 if id not found */
 getHero(id: number): Observable<Hero> {
+  //address of the web api:
   const url = `${this.heroesUrl}/${id}`;
+
   return this.http.get<Hero>(url).pipe(
+    // on success never touchs the original value
     tap(_ => this.log(`fetched hero id=${id}`)),
+    //on error
     catchError(this.handleError<Hero>(`getHero id=${id}`))
   );
 }
@@ -72,7 +76,9 @@ getHero(id: number): Observable<Hero> {
 /** PUT: update the hero on the server */
 updateHero(hero: Hero): Observable<any> {
   return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+    //on success
     tap(_ => this.log(`updated hero id=${hero.id}`)),
+    //on error
     catchError(this.handleError<any>('updateHero'))
   );
 }
@@ -80,7 +86,9 @@ updateHero(hero: Hero): Observable<any> {
 /** POST: add a new hero to the server */
 addHero(hero: Hero): Observable<Hero> {
   return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
+    //on success
     tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
+    //on error
     catchError(this.handleError<Hero>('addHero'))
   );
 }
@@ -101,10 +109,13 @@ searchHeroes(term: string): Observable<Hero[]> {
     // if not search term, return empty hero array.
     return of([]);
   }
+  //if exists, send a http request and get the results.
   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-    tap(x => x.length ?
+    //on success
+    tap(x => x.length ? //according to its length, found or not found
        this.log(`found heroes matching "${term}"`) :
        this.log(`no heroes matching "${term}"`)),
+       //on error
     catchError(this.handleError<Hero[]>('searchHeroes', []))
   );
 }
