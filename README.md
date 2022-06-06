@@ -1,5 +1,7 @@
 # AngularTourOfHeroes
 
+This project is edited from official tutorial of tour of heroes. Weapons entitiy has added, unit tests will be added soon.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.2.
 
 ## Development server
