@@ -9,7 +9,7 @@ import { Weapon } from './weapon';
   providedIn: 'root'
 })
 export class WeaponService {
-  //The heroes web API expects a special header in HTTP save requests.
+  //The weapons web API expects a special header in HTTP save requests.
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -53,5 +53,55 @@ getWeapons(): Observable<Weapon[]> {
       catchError(this.handleError<Weapon[]>('getWeapons', []))
     );
 }
+
+/** GET weapon by id. Will 404 if id not found */
+getWeapon(id: number): Observable<Weapon> {
+  //address of the web api:
+  const url = `${this.weaponsUrl}/${id}`;
+
+  return this.http.get<Weapon>(url).pipe(
+    // on success never touchs the original value
+    tap(_ => this.log(`fetched weapon id=${id}`)),
+    //on error
+    catchError(this.handleError<Weapon>(`getWeapon id=${id}`))
+  );
+}
+/** POST: add a new weapon to the server */
+addWeapon(weapon: Weapon): Observable<Weapon> {
+  return this.http.post<Weapon>(this.weaponsUrl, weapon, this.httpOptions).pipe(
+    //on success
+    tap((newWeapon: Weapon) => this.log(`added weapon w/ id=${newWeapon.id}`)),
+    //on error
+    catchError(this.handleError<Weapon>('addWeapon'))
+  );
+}
+
+/** DELETE: delete the weapon from the server */
+deleteWeapon(id: number): Observable<Weapon> {
+  const url = `${this.weaponsUrl}/${id}`;
+
+  return this.http.delete<Weapon>(url, this.httpOptions).pipe(
+    tap(_ => this.log(`deleted weapon id=${id}`)),
+    catchError(this.handleError<Weapon>('deleteWeapon'))
+  );
+}
+
+/* GET weapons whose name contains search term */
+searchWeapons(term: string): Observable<Weapon[]> {
+  if (!term.trim()) {
+    // if not search term, return empty hero array.
+    return of([]);
+  }
+  //if exists, send a http request and get the results.
+  return this.http.get<Weapon[]>(`${this.weaponsUrl}/?name=${term}`).pipe(
+    //on success
+    tap(x => x.length ? //according to its length, found or not found
+       this.log(`found weapons matching "${term}"`) :
+       this.log(`no weapons matching "${term}"`)),
+       //on error
+    catchError(this.handleError<Weapon[]>('searchWeapones', []))
+  );
+}
+
 
 }
