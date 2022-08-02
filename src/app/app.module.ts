@@ -12,6 +12,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { WeaponsComponent } from './weapons/weapons.component';
+import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { WeaponsComponent } from './weapons/weapons.component';
     DashboardComponent,
     HeroSearchComponent,
     WeaponsComponent,
+    WeaponDetailComponent,
   ],
   imports: [
     BrowserModule,

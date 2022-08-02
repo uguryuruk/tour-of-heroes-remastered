@@ -5,10 +5,7 @@
   <input id="new-weapon" #weaponName />
 
   <!-- (click) passes input value to add() and then clears the input -->
-  <!-- <button type="button" class="add-button" (click)="add(weaponName.value); weaponName.value=''">
-    Add Weapon
-  </button> -->
-  <button type="button" class="add-button">
+  <button type="button" class="add-button" (click)="add(weaponName.value); weaponName.value=''">
     Add Weapon
   </button>
 </div>
@@ -18,10 +15,9 @@
     <a routerLink="/weapondetail/{{weapon.id}}">
       <span class="badge">{{weapon.id}}</span> {{weapon.name}}
     </a>
-      <!-- <button type="button" class="delete" title="delete weapon"
-  (click)="delete(weapon)">x</button> -->
       <button type="button" class="delete" title="delete weapon"
-  >x</button>
+  (click)="delete(weapon)">x</button>
+      
   </li>
 </ul>
 <!-- alt bileşene veri transferi için -->

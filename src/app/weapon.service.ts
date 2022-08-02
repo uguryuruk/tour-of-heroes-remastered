@@ -66,6 +66,17 @@ getWeapon(id: number): Observable<Weapon> {
     catchError(this.handleError<Weapon>(`getWeapon id=${id}`))
   );
 }
+
+/** PUT: update the hero on the server */
+updateWeapon(weapon: Weapon): Observable<any> {
+  return this.http.put(this.weaponsUrl, weapon, this.httpOptions).pipe(
+    //on success
+    tap(_ => this.log(`updated weapon id=${weapon.id}`)),
+    //on error
+    catchError(this.handleError<any>('updateWeapon'))
+  );
+}
+
 /** POST: add a new weapon to the server */
 addWeapon(weapon: Weapon): Observable<Weapon> {
   return this.http.post<Weapon>(this.weaponsUrl, weapon, this.httpOptions).pipe(
@@ -99,7 +110,7 @@ searchWeapons(term: string): Observable<Weapon[]> {
        this.log(`found weapons matching "${term}"`) :
        this.log(`no weapons matching "${term}"`)),
        //on error
-    catchError(this.handleError<Weapon[]>('searchWeapones', []))
+    catchError(this.handleError<Weapon[]>('searchWeapons', []))
   );
 }
 

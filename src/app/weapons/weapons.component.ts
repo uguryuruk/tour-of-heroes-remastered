@@ -23,7 +23,7 @@ export class WeaponsComponent implements OnInit {
     this.weaponService.getWeapons()
         .subscribe(weapons => this.weapons = weapons);
   }
-/*
+
   //calls the add weapon method from the weaponService,
   //then pushes the weapon to the list directly-not from response
   add(name: string): void {
@@ -43,5 +43,4 @@ export class WeaponsComponent implements OnInit {
     this.weapons = this.weapons.filter(h => h !== weapon);
     this.weaponService.deleteWeapon(weapon.id).subscribe();
   }
-*/
 }
